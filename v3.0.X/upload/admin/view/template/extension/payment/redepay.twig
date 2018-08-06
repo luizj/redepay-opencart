@@ -1,0 +1,476 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+	    <button type="submit" form="form-redepay" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a onclick="location = '{{ cancel }}';" class="btn btn-default">{{ button_cancel }}<i class="fa fa-reply"></i></a>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+	<div class="container-fluid">
+    {% if error_warning  %}
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    {% endif %}
+
+    	<div class="panel panel-default">
+		  <div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-pencil"></i>RedePay</h3>
+		  </div>
+
+			<div id="redepay-register" style="margin:35px 35px 0 35px;">
+				<img src="view/image/payment/redepay.png" style="margin-right:10px;">
+				<p style="margin-top:8.5px;">{{ text_register }}</p>
+			</div>
+
+			<div id="redepay-support" style="margin:0 35px 0 35px;">
+				<p>{{ text_support }}</p>
+			</div>
+
+			<div class="panel-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-redepay" class="form-horizontal">
+					<!-- tokens -->
+					<div class="panel panel-default panel-rede">
+						<div class="panel-heading">
+							<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit_tokens }}</h3>
+						</div>
+
+						<div class="panel-body">
+							<!-- api key -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-api-key"><span data-toggle="tooltip" title="{{ help_api_key }}">{{ entry_api_key }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_redepay_api_key" value="{{ payment_redepay_api_key }}" placeholder="{{ entry_api_key }}" id="input-api-key" class="form-control" />
+									{% if error_api_key %}
+										<div class="text-danger">
+											{{ error_api_key }}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+
+							<!-- token nip -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-token-nip"><span data-toggle="tooltip" title="{{ help_token_nip }}">{{ entry_token_nip }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_redepay_token_nip" value="{{ payment_redepay_token_nip }}" placeholder="{{ entry_token_nip }}" id="input-token-nip" class="form-control" />
+									{% if error_token_nip %}
+										<div class="text-danger">
+											{{ error_token_nip }}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+
+							<!-- public token -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-public-token"><span data-toggle="tooltip" title="{{ help_public_token }}">{{ entry_public_token }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_redepay_public_token" value="{{ payment_redepay_public_token }}" placeholder="{{ entry_public_token }}" id="input-public-token" class="form-control" />
+									{% if error_public_token %}
+										<div class="text-danger">
+											{{ error_public_token }}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- notifications -->
+					<div class="panel panel-default panel-rede">
+						<div class="panel-heading">
+							<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit_notifications }}</h3>
+						</div>
+
+						<div class="panel-body">
+							<!-- notification url -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-notification-url"><span data-toggle="tooltip" title="{{ help_notification_url }}">{{ entry_notification_url }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_redepay_notification_url" value="{{ notification_url }}" placeholder="{{ entry_notification_url }}" id="input-notification-url" class="form-control" readonly="readonly" />
+									{% if error_notification_url %}
+										<div class="text-danger">
+											{{ error_notification_url }}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- redirect -->
+					<div class="panel panel-default panel-rede">
+						<div class="panel-heading">
+							<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit_redirects }}</h3>
+						</div>
+
+						<div class="panel-body">
+							<!-- redirect url -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-redirect-url"><span data-toggle="tooltip" title="{{ help_redirect_url }}">{{ entry_redirect_url }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_redepay_redirect_url" value="{{ redirect_url }}" placeholder="{{ entry_redirect_url }}" id="input-redirect-url" class="form-control" readonly="readonly" />
+									{% if error_redirect_url %}
+										<div class="text-danger">
+											{{ error_redirect_url }}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+
+							<!-- cancel url -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-cancel-url"><span data-toggle="tooltip" title="{{ help_cancel_url }}">{{ entry_cancel_url }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_redepay_cancel_url" value="{{ cancel_url }}" placeholder="{{ entry_cancel_url }}" id="input-cancel-url" class="form-control" readonly="readonly" />
+									{% if error_cancel_url %}
+										<div class="text-danger">
+											{{ error_cancel_url }}
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- installments -->
+					<div class="panel panel-default panel-rede">
+						<div class="panel-heading">
+							<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit_installments }}</h3>
+						</div>
+
+						<div class="panel-body">
+							<!-- max installments -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-max-installments"><span data-toggle="tooltip" title="{{ help_max_installments }}">{{ entry_max_installments }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_max_installments" id="input-max-installments" class="form-control">
+										{% for key,value in util_installments_range %}
+											{% if key == payment_redepay_max_installments %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- min value for installment -->
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-min-value-installment"><span data-toggle="tooltip" title="{{ help_min_value_installment }}">{{ entry_min_value_installment }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_redepay_min_value_installment" value="{{ payment_redepay_min_value_installment }}" placeholder="{{ entry_min_value_installment }}" id="input-min-value-installment" class="form-control" />
+								</div>
+							</div>
+
+							<!-- min installment value -->
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-min-installment-value"><span data-toggle="tooltip" title="{{ help_min_installment_value }}">{{ entry_min_installment_value }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_redepay_min_installment_value" value="{{ payment_redepay_min_installment_value }}" placeholder="{{ entry_min_installment_value }}" id="input-min-installment-value" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- fields -->
+					<div class="panel panel-default panel-rede">
+						<div class="panel-heading">
+							<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit_fields }}</h3>
+						</div>
+
+						<div class="panel-body">
+							<!-- document -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-document"><span data-toggle="tooltip" title="{{ help_document }}">{{ entry_document }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_document" id="input-document" class="form-control">
+										{% for key,value in util_fields %}
+											{% if key == payment_redepay_document %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- cellphone -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-cellphone"><span data-toggle="tooltip" title="{{ help_cellphone }}">{{ entry_cellphone }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_cellphone" id="input-cellphone" class="form-control">
+										{% for key,value in util_fields %}
+											{% if key == payment_redepay_cellphone %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{%  else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- phone -->
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-phone"><span data-toggle="tooltip" title="{{ help_phone }}">{{ entry_phone }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_phone" id="input-phone" class="form-control">
+										<option value=""></option>
+										{% for key,value in util_fields %}
+											{% if key == payment_redepay_phone %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- address -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-address"><span data-toggle="tooltip" title="{{ help_address }}">{{ entry_address }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_address" id="input-address" class="form-control">
+										{% for key,value in util_fields %}
+											{% if key == payment_redepay_address %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- number -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-number"><span data-toggle="tooltip" title="{{ help_number }}">{{ entry_number }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_number" id="input-number" class="form-control">
+										{% for key,value in util_fields %}
+											{% if key == payment_redepay_number %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- complement -->
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-complement"><span data-toggle="tooltip" title="{{ help_complement }}">{{ entry_complement }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_complement" id="input-complement" class="form-control">
+										<option value=""></option>
+										{% for key,value in util_fields %}
+											{% if key == payment_redepay_complement %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- neighborhood -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-neighborhood"><span data-toggle="tooltip" title="{{ help_neighborhood }}">{{ entry_neighborhood }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_neighborhood" id="input-neighborhood" class="form-control">
+										{% for key,value in util_fields %}
+											{% if key == payment_redepay_neighborhood %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- order status -->
+					<div class="panel panel-default panel-rede">
+						<div class="panel-heading">
+							<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit_order_status }}</h3>
+						</div>
+
+						<div class="panel-body">
+							<!-- status: waiting payment -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-order-waiting-payment"><span data-toggle="tooltip" title="{{ help_order_waiting_payment }}">{{ entry_order_waiting_payment }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_order_waiting_payment" id="input-order-waiting-payment" class="form-control">
+										{% for key,value in util_status %}
+											{% if key == payment_redepay_order_waiting_payment %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- status: payment in analisys -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-order-payment-analisys"><span data-toggle="tooltip" title="{{ help_order_payment_analisys }}">{{ entry_order_payment_analisys }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_order_payment_analisys" id="input-order-payment-analisys" class="form-control">
+										{% for key,value in util_status %}
+											{% if key == payment_redepay_order_payment_analisys %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- status: approved payment -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-order-approved-payment"><span data-toggle="tooltip" title="{{ help_order_approved_payment }}">{{ entry_order_approved_payment }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_order_approved_payment" id="input-order-approved-payment" class="form-control">
+										{% for key,value in util_status %}
+											{% if key == payment_redepay_order_approved_payment %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- status: payment in dispute -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-order-payment-dispute"><span data-toggle="tooltip" title="{{ help_order_payment_dispute }}">{{ entry_order_payment_dispute }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_order_payment_dispute" id="input-order-payment-dispute" class="form-control">
+										{% for key,value in util_status %}
+											{% if key == payment_redepay_order_payment_dispute %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- status: reversed payment -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-order-reversed-payment"><span data-toggle="tooltip" title="{{ help_order_reversed_payment }}">{{ entry_order_reversed_payment }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_order_reversed_payment" id="input-order-reversed-payment" class="form-control">
+										{% for key,value in util_status %}
+											{% if key == payment_redepay_order_reversed_payment %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- status: chargeback payment -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-order-chargeback-payment"><span data-toggle="tooltip" title="{{ help_order_chargeback_payment }}">{{ entry_order_chargeback_payment }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_order_chargeback_payment" id="input-order-chargeback-payment" class="form-control">
+										{% for key,value in util_status %}
+											{% if key == payment_redepay_order_chargeback_payment %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<!-- status: canceled payment -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-order-canceled-payment"><span data-toggle="tooltip" title="{{ help_order_canceled_payment }}">{{ entry_order_canceled_payment }}</span></label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_order_canceled_payment" id="input-order-canceled-payment" class="form-control">
+										{% for key,value in util_status %}
+											{% if key == payment_redepay_order_canceled_payment %}
+												<option value="{{ key }}" selected="selected" >{{ value }}</option>
+											{% else %}
+												<option value="{{ key }}" >{{ value }}</option>
+											{% endif %}
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- settings -->
+					<div class="panel panel-default panel-rede">
+						<div class="panel-heading">
+							<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit_settings }}</h3>
+						</div>
+
+						<div class="panel-body">
+							<!-- min value for enable -->
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-min-value-enable"><span data-toggle="tooltip" title="{{ help_min_value_enable }}">{{ entry_min_value_enable }}</span></label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_redepay_min_value_enable" value="{{ payment_redepay_min_value_enable }}" placeholder="{{ entry_min_value_enable }}" id="input-min-value-enable" class="form-control" />
+								</div>
+							</div>
+
+							<!-- status -->
+							<div class="form-group required">
+								<label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+								<div class="col-sm-10">
+									<select name="payment_redepay_status" id="input-status" class="form-control">
+										{% if payment_redepay_status  %}
+											<option value="1" selected="selected">{{ text_enabled }}</option>
+											<option value="0">{{ text_disabled }}</option>
+										{% else %}
+											<option value="1">{{ text_enabled }}</option>
+											<option value="0" selected="selected">{{ text_disabled }}</option>
+										{% endif %}
+									</select>
+								</div>
+							</div>
+
+							<!-- sort order -->
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+								<div class="col-sm-10">
+									<input type="text" name="payment_redepay_sort_order" value="{{ payment_redepay_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{{ footer }}
